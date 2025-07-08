@@ -1,15 +1,13 @@
 import { useState } from "react";
 
-import UabcLogo from "@/assets/icons/UabcLogo";
-import {
-	IconBook,
-	IconCalendarWeek,
-	IconFileInfo,
-	IconMenu,
-	IconMenu2,
-	IconUser,
-	IconX,
-} from "@tabler/icons-react";
+import UabcLogo from "@/assets/icons/main/UabcLogo";
+
+import IconBook from "@/assets/icons/IconBook";
+import IconCalendarWeek from "@/assets/icons/IconCalendarWeek";
+import IconFileInfo from "@/assets/icons/IconFileInfo";
+import IconMenu2 from "@/assets/icons/IconMenu2";
+import IconUser from "@/assets/icons/IconUser";
+import IconX from "@/assets/icons/IconX";
 
 const Nav = () => {
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -39,22 +37,29 @@ const Nav = () => {
 								type="button"
 								className="flex items-center space-x-2 justify-start px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-primary/10 hover:text-primary transition-colors"
 							>
-								<IconCalendarWeek stroke={2} className="text-primary" />
+								<IconCalendarWeek className="text-primary" />
 								<span>Horarios</span>
 							</button>
 							<button
 								type="button"
 								className="flex items-center space-x-2 justify-start px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-primary/10 hover:text-primary transition-colors"
 							>
-								<IconFileInfo stroke={2} className="text-primary" />
+								<IconFileInfo className="text-primary" />
 								<span>Calificaciones</span>
 							</button>
 							<button
 								type="button"
 								className="flex items-center space-x-2 justify-start px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-primary/10 hover:text-primary transition-colors"
 							>
-								<IconBook stroke={2} className="text-primary" />
+								<IconBook className="text-primary" />
 								<span>Historial</span>
+							</button>
+							<button
+								type="button"
+								className="flex items-center space-x-2 justify-start px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-primary/10 hover:text-primary transition-colors"
+							>
+								<IconUser className="text-primary" />
+								<span>Mi perfil</span>
 							</button>
 						</nav>
 
@@ -65,9 +70,9 @@ const Nav = () => {
 							onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
 						>
 							{mobileMenuOpen ? (
-								<IconX stroke={2} className="text-primary" />
+								<IconX className="text-primary" />
 							) : (
-								<IconMenu2 stroke={2} className="text-primary" />
+								<IconMenu2 className="text-primary" />
 							)}
 						</button>
 					</div>
@@ -81,28 +86,28 @@ const Nav = () => {
 								type="button"
 								className="flex items-center justify-start px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-primary/10 hover:text-primary transition-colors"
 							>
-								<IconUser stroke={2} className="text-primary mr-2" />
+								<IconUser className="text-primary mr-2" />
 								Perfil
 							</button>
 							<button
 								type="button"
 								className="flex items-center justify-start px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-primary/10 hover:text-primary transition-colors"
 							>
-								<IconCalendarWeek stroke={2} className="text-primary mr-2" />
+								<IconCalendarWeek className="text-primary mr-2" />
 								Horarios
 							</button>
 							<button
 								type="button"
 								className="flex items-center justify-start px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-primary/10 hover:text-primary transition-colors"
 							>
-								<IconFileInfo stroke={2} className="text-primary mr-2" />
+								<IconFileInfo className="text-primary mr-2" />
 								Calificaciones
 							</button>
 							<button
 								type="button"
 								className="flex items-center justify-start px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-primary/10 hover:text-primary transition-colors"
 							>
-								<IconBook stroke={2} className="text-primary mr-2" />
+								<IconBook className="text-primary mr-2" />
 								Historial
 							</button>
 						</div>
