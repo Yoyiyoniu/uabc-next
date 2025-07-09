@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as EstudiantesRouteImport } from './routes/estudiantes'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as EstudiantesLoginRouteImport } from './routes/estudiantes_.login'
 
 const EstudiantesRoute = EstudiantesRouteImport.update({
   id: '/estudiantes',
@@ -22,31 +23,40 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EstudiantesLoginRoute = EstudiantesLoginRouteImport.update({
+  id: '/estudiantes_/login',
+  path: '/estudiantes/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/estudiantes': typeof EstudiantesRoute
+  '/estudiantes/login': typeof EstudiantesLoginRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/estudiantes': typeof EstudiantesRoute
+  '/estudiantes/login': typeof EstudiantesLoginRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/estudiantes': typeof EstudiantesRoute
+  '/estudiantes_/login': typeof EstudiantesLoginRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/estudiantes'
+  fullPaths: '/' | '/estudiantes' | '/estudiantes/login'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/estudiantes'
-  id: '__root__' | '/' | '/estudiantes'
+  to: '/' | '/estudiantes' | '/estudiantes/login'
+  id: '__root__' | '/' | '/estudiantes' | '/estudiantes_/login'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   EstudiantesRoute: typeof EstudiantesRoute
+  EstudiantesLoginRoute: typeof EstudiantesLoginRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +75,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/estudiantes_/login': {
+      id: '/estudiantes_/login'
+      path: '/estudiantes/login'
+      fullPath: '/estudiantes/login'
+      preLoaderRoute: typeof EstudiantesLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   EstudiantesRoute: EstudiantesRoute,
+  EstudiantesLoginRoute: EstudiantesLoginRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
