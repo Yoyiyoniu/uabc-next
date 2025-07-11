@@ -9,7 +9,7 @@ import IconMenu2 from "@/assets/icons/IconMenu2";
 import IconUser from "@/assets/icons/IconUser";
 import IconX from "@/assets/icons/IconX";
 
-const Nav = () => {
+export const Nav = () => {
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
 	return (
@@ -118,5 +118,3 @@ const Nav = () => {
 		</header>
 	);
 };
-
-export default Nav;

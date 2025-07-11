@@ -17,7 +17,7 @@ const FEATURES = [
 		title: "Cima Sync",
 		description: "Acceso directo al Portal Cimarrón sin contraseñas",
 		icon: "🤓",
-		link: "https://github.com/uabc-next/auto-login",
+		link: "https://github.com/Yoyiyoniu/Cima-Sync",
 		available: true,
 	},
 	{
@@ -25,7 +25,7 @@ const FEATURES = [
 		description:
 			"Acceso directo al Portal de Estudiantes con información clara y actualizada",
 		icon: "🔐",
-		link: "https://github.com/uabc-next/auto-login",
+		link: "https://github.com/Yoyiyoniu/uabc-next",
 		available: true,
 	},
 	{

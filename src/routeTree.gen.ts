@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as EstudiantesRouteImport } from './routes/estudiantes'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as EstudiantesLoginRouteImport } from './routes/estudiantes_.login'
+import { Route as EstudiantesHorarioRouteImport } from './routes/estudiantes_.horario'
 
 const EstudiantesRoute = EstudiantesRouteImport.update({
   id: '/estudiantes',
@@ -28,34 +29,52 @@ const EstudiantesLoginRoute = EstudiantesLoginRouteImport.update({
   path: '/estudiantes/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EstudiantesHorarioRoute = EstudiantesHorarioRouteImport.update({
+  id: '/estudiantes_/horario',
+  path: '/estudiantes/horario',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/estudiantes': typeof EstudiantesRoute
+  '/estudiantes/horario': typeof EstudiantesHorarioRoute
   '/estudiantes/login': typeof EstudiantesLoginRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/estudiantes': typeof EstudiantesRoute
+  '/estudiantes/horario': typeof EstudiantesHorarioRoute
   '/estudiantes/login': typeof EstudiantesLoginRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/estudiantes': typeof EstudiantesRoute
+  '/estudiantes_/horario': typeof EstudiantesHorarioRoute
   '/estudiantes_/login': typeof EstudiantesLoginRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/estudiantes' | '/estudiantes/login'
+  fullPaths:
+    | '/'
+    | '/estudiantes'
+    | '/estudiantes/horario'
+    | '/estudiantes/login'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/estudiantes' | '/estudiantes/login'
-  id: '__root__' | '/' | '/estudiantes' | '/estudiantes_/login'
+  to: '/' | '/estudiantes' | '/estudiantes/horario' | '/estudiantes/login'
+  id:
+    | '__root__'
+    | '/'
+    | '/estudiantes'
+    | '/estudiantes_/horario'
+    | '/estudiantes_/login'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   EstudiantesRoute: typeof EstudiantesRoute
+  EstudiantesHorarioRoute: typeof EstudiantesHorarioRoute
   EstudiantesLoginRoute: typeof EstudiantesLoginRoute
 }
 
@@ -82,12 +101,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EstudiantesLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/estudiantes_/horario': {
+      id: '/estudiantes_/horario'
+      path: '/estudiantes/horario'
+      fullPath: '/estudiantes/horario'
+      preLoaderRoute: typeof EstudiantesHorarioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   EstudiantesRoute: EstudiantesRoute,
+  EstudiantesHorarioRoute: EstudiantesHorarioRoute,
   EstudiantesLoginRoute: EstudiantesLoginRoute,
 }
 export const routeTree = rootRouteImport
