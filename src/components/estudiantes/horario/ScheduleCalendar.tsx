@@ -1,5 +1,7 @@
 import { forwardRef, useMemo, useState } from "react";
 
+import "./ScheduleCalendar.css";
+
 interface ClassItem {
 	id: number;
 	subject: string;
@@ -34,10 +36,10 @@ const formatTimeDisplay = (time: string, is24h: boolean) => {
 };
 
 const getClassTypeBadge = (type: string) => {
-	if (type === "Laboratorio") return "bg-blue-100 text-blue-800";
-	if (type === "Taller") return "bg-indigo-100 text-indigo-800";
-	if (type === "Proyecto") return "bg-red-100 text-red-800";
-	return "bg-green-100 text-green-800";
+	if (type === "Laboratorio") return "badge-laboratorio";
+	if (type === "Taller") return "badge-taller";
+	if (type === "Proyecto") return "badge-proyecto";
+	return "badge-default";
 };
 
 export const ScheduleCalendar = forwardRef<
@@ -70,49 +72,56 @@ export const ScheduleCalendar = forwardRef<
 	return (
 		<div
 			ref={ref}
-			className="bg-white/90 backdrop-blur-sm rounded-xl shadow-xl border border-gray-200/50 overflow-hidden w-full"
+			className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden w-full"
 		>
 			<div className="relative">
-				<div className="flex justify-end px-3 sm:px-6 lg:px-8 pt-3 sm:pt-4 lg:pt-6 pb-2 sm:pb-3 lg:pb-4">
-					<div className="flex items-center gap-2 sm:gap-3 select-none">
-						{hourButtons.map((btn) => (
-							<button
-								key={btn.label}
-								type="button"
-								onClick={() => setIs24HourFormat(btn.value)}
-								className={`px-2 sm:px-3 lg:px-4 py-1 sm:py-1.5 lg:py-2 rounded-full text-xs sm:text-sm font-semibold transition-all focus:outline-none ${
-									is24HourFormat === btn.value
-										? "bg-primary text-white shadow-md"
-										: "bg-gray-200 text-gray-700 hover:bg-gray-300"
-								}`}
-								aria-pressed={is24HourFormat === btn.value}
-							>
-								{btn.label}
-							</button>
-						))}
+				<div className="bg-white border-b border-gray-200 px-6 py-4">
+					<div className="flex items-center justify-between">
+						<h2 className="text-2xl font-semibold text-primary">
+							Horario Semanal
+						</h2>
+						<div className="flex items-center gap-1">
+							{hourButtons.map((btn) => (
+								<button
+									key={btn.label}
+									type="button"
+									onClick={() => setIs24HourFormat(btn.value)}
+									className={`px-3 py-1.5 rounded text-sm font-medium transition-all ${
+										is24HourFormat === btn.value
+											? "bg-primary text-white"
+											: "bg-gray-100 text-gray-600 hover:bg-gray-200"
+									}`}
+									aria-pressed={is24HourFormat === btn.value}
+								>
+									{btn.label}
+								</button>
+							))}
+						</div>
 					</div>
 				</div>
-				<div className="overflow-x-auto hidden lg:block px-3 sm:px-4 lg:px-6 pb-3 sm:pb-4 lg:pb-6">
-					<table className="w-full border-collapse bg-white rounded-lg overflow-hidden shadow-sm">
-						<thead className="bg-gradient-to-r from-gray-50 to-gray-100">
-							<tr>
-								<th className="px-8 py-5 text-left text-sm font-bold text-gray-700 uppercase tracking-wider border-r border-gray-200">
+
+				<div className="overflow-x-auto hidden lg:block">
+					<table className="w-full table-fixed">
+						<thead>
+							<tr className="bg-gray-50">
+								<th className="px-4 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider border-r border-gray-200 w-24">
 									Hora
 								</th>
 								{days.map((day) => (
 									<th
 										key={day}
-										className="px-8 py-5 text-center text-sm font-bold text-gray-700 uppercase tracking-wider border-r border-gray-200 last:border-r-0"
+										className="px-4 py-3 text-center text-sm font-medium text-gray-600 uppercase tracking-wider border-r border-gray-200 last:border-r-0"
+										style={{ width: `calc((100% - 6rem) / ${days.length})` }}
 									>
 										{day}
 									</th>
 								))}
 							</tr>
 						</thead>
-						<tbody className="bg-white">
+						<tbody>
 							{hours.map((hour) => (
-								<tr key={hour} className="border-b border-gray-200 h-20">
-									<td className="px-8 py-5 whitespace-nowrap text-base font-bold text-gray-900 border-r border-gray-200 bg-gradient-to-r from-gray-50 to-gray-100 w-32 h-20">
+								<tr key={hour} className="border-b border-gray-100">
+									<td className="px-4 py-2 text-sm font-medium text-gray-700 border-r border-gray-200 bg-gray-50 h-16 w-24">
 										{formatTimeDisplay(hour, is24HourFormat)}
 									</td>
 									{days.map((day) => {
@@ -123,44 +132,47 @@ export const ScheduleCalendar = forwardRef<
 											const startIdx = hours.indexOf(classStart.startTime);
 											const endIdx = hours.indexOf(classStart.endTime);
 											const duration = endIdx - startIdx;
-											const cellHeight = duration * 80; // 80px por fila (h-20)
+											const cellHeight = duration * 64; // 64px por fila (h-16)
 
 											return (
 												<td
 													key={`${day}-${hour}`}
-													className="px-4 py-3 align-top border-r border-gray-200 relative"
+													className="p-1 align-top border-r border-gray-200 relative"
 													rowSpan={duration > 0 ? duration : 1}
-													style={{ height: `${cellHeight}px` }}
+													style={{
+														height: `${cellHeight}px`,
+														width: `calc((100% - 6rem) / ${days.length})`,
+													}}
 												>
 													<div
-														className={`${classStart.color} text-white p-4 rounded-xl text-sm h-full flex flex-col justify-center relative z-10 bg-opacity-90 border border-white/20 overflow-hidden shadow-lg`}
-														style={{ height: `${cellHeight - 24}px` }}
+														className={`${classStart.color} text-white p-3 rounded-lg text-sm h-full flex flex-col justify-center shadow-sm calendar-card-hover calendar-cell-content`}
+														style={{ height: `${cellHeight - 8}px` }}
 													>
-														<p
+														<div
 															title={`Código: ${classStart.code}`}
-															className="font-bold text-base line-clamp-1"
+															className="font-bold text-sm mb-1 line-clamp-1"
 														>
 															{classStart.code}
-														</p>
-														<p
+														</div>
+														<div
 															title={`Materia: ${classStart.subject}`}
-															className="font-semibold line-clamp-1 mt-1"
+															className="font-medium text-xs mb-1 line-clamp-1"
 														>
 															{classStart.subject}
-														</p>
-														<p
+														</div>
+														<div
 															title={`Aula: ${classStart.classroom}`}
-															className="text-sm opacity-90 mt-2 line-clamp-1"
+															className="text-xs opacity-90 mb-1 line-clamp-1"
 														>
 															{classStart.classroom}
-														</p>
-														<p
+														</div>
+														<div
 															title={`Profesor: ${classStart.teacher}`}
-															className="text-sm opacity-75 line-clamp-1"
+															className="text-xs opacity-75 mb-1 line-clamp-1"
 														>
 															{classStart.teacher}
-														</p>
-														<p
+														</div>
+														<div
 															title={`Horario: ${formatTimeDisplay(
 																classStart.startTime,
 																is24HourFormat,
@@ -168,7 +180,7 @@ export const ScheduleCalendar = forwardRef<
 																classStart.endTime,
 																is24HourFormat,
 															)}`}
-															className="text-sm opacity-90 mt-2 font-medium line-clamp-1"
+															className="text-xs font-medium line-clamp-1"
 														>
 															{formatTimeDisplay(
 																classStart.startTime,
@@ -179,14 +191,14 @@ export const ScheduleCalendar = forwardRef<
 																classStart.endTime,
 																is24HourFormat,
 															)}
-														</p>
+														</div>
 														{duration > 2 && (
-															<p
+															<div
 																title={`Desglose por hora: ${duration} horas`}
-																className="text-sm opacity-75 mt-1 font-semibold line-clamp-1"
+																className="text-xs opacity-75 mt-1 line-clamp-1"
 															>
-																{duration} horas
-															</p>
+																({duration} horas)
+															</div>
 														)}
 													</div>
 												</td>
@@ -199,9 +211,12 @@ export const ScheduleCalendar = forwardRef<
 										return (
 											<td
 												key={`${day}-${hour}`}
-												className="px-4 py-3 border-r border-gray-200 h-20"
+												className="p-1 border-r border-gray-200 h-16"
+												style={{
+													width: `calc((100% - 6rem) / ${days.length})`,
+												}}
 											>
-												<div className="h-16 bg-gray-50/50 rounded-lg border border-gray-200/40" />
+												<div className="empty-cell calendar-cell-simple" />
 											</td>
 										);
 									})}
@@ -210,20 +225,26 @@ export const ScheduleCalendar = forwardRef<
 						</tbody>
 					</table>
 				</div>
-				<div className="lg:hidden px-2 sm:px-4 lg:px-6 pb-2 sm:pb-4 lg:pb-6">
+
+				<div className="lg:hidden p-4 space-y-4">
 					{days.map((day) => {
 						const classesOfDay = scheduleByDay[day];
 						return (
 							<div
 								key={day}
-								className="border-b border-gray-200 last:border-b-0"
+								className="border border-gray-200 rounded-lg overflow-hidden bg-[#fafafa] relative"
 							>
-								<div className="px-3 sm:px-6 lg:px-8 py-3 sm:py-4 lg:py-6 bg-gradient-to-r from-gray-50 to-gray-100 rounded-t-lg">
-									<h4 className="font-bold text-sm sm:text-base lg:text-lg text-gray-900 line-clamp-1">
+								{/* Background Pattern */}
+								<div className="absolute inset-0 z-0 pointer-events-none opacity-20 mobile-day-background" />
+								<div className="px-4 py-3 bg-gray-50 border-b border-gray-200 relative z-10">
+									<h4
+										title={day}
+										className="font-medium text-gray-900 line-clamp-1"
+									>
 										{day}
 									</h4>
 								</div>
-								<div className="px-3 sm:px-6 lg:px-8 py-3 sm:py-4 lg:py-6 space-y-3 sm:space-y-4 lg:space-y-6 bg-white rounded-b-lg">
+								<div className="p-4 space-y-3 relative z-10">
 									{classesOfDay.length > 0 ? (
 										classesOfDay.map((classItem) => {
 											const startIdx = hours.indexOf(classItem.startTime);
@@ -232,29 +253,29 @@ export const ScheduleCalendar = forwardRef<
 											return (
 												<div
 													key={classItem.id}
-													className="flex items-start space-x-2 sm:space-x-3 lg:space-x-4 p-3 sm:p-4 lg:p-6 rounded-lg sm:rounded-xl border border-gray-200/50 bg-white/70 shadow-sm hover:shadow-md transition-shadow"
+													className="flex items-start space-x-3 p-3 rounded-lg border border-gray-200 mobile-card-hover"
 												>
 													<div
-														className={`w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 ${classItem.color} rounded-full flex-shrink-0 mt-0.5 sm:mt-1 shadow-sm`}
+														className={`w-6 h-6 ${classItem.color} rounded-lg flex-shrink-0 mt-0.5 color-indicator`}
 													/>
 													<div className="flex-1 min-w-0">
-														<div className="flex flex-col gap-1 sm:gap-2 mb-2 sm:mb-3">
+														<div className="mb-2">
 															<h3
 																title={`Materia: ${classItem.subject}`}
-																className="text-sm sm:text-base font-bold text-gray-900 line-clamp-1"
+																className="text-sm font-semibold text-gray-900 mb-1 line-clamp-1"
 															>
 																{classItem.subject}
 															</h3>
 															<span
 																title={`Tipo: ${classItem.type}`}
-																className={`inline-flex px-2 sm:px-3 py-0.5 sm:py-1 text-xs sm:text-sm font-semibold rounded-full flex-shrink-0 line-clamp-1 w-fit ${getClassTypeBadge(classItem.type)}`}
+																className={`inline-flex px-2 py-1 text-xs font-medium rounded line-clamp-1 ${getClassTypeBadge(classItem.type)}`}
 															>
 																{classItem.type}
 															</span>
 														</div>
 														<p
 															title={`Código: ${classItem.code}`}
-															className="text-sm sm:text-base text-gray-700 mb-2 sm:mb-3 font-bold line-clamp-1"
+															className="text-sm text-gray-700 mb-2 font-medium line-clamp-1"
 														>
 															{classItem.code}
 														</p>
@@ -266,7 +287,7 @@ export const ScheduleCalendar = forwardRef<
 																classItem.endTime,
 																is24HourFormat,
 															)}`}
-															className="text-sm sm:text-base text-gray-600 mb-2 sm:mb-3 font-semibold line-clamp-1"
+															className="text-sm text-gray-600 mb-2 line-clamp-1"
 														>
 															{formatTimeDisplay(
 																classItem.startTime,
@@ -279,70 +300,29 @@ export const ScheduleCalendar = forwardRef<
 															)}{" "}
 															({duration}h)
 														</p>
-														<div className="space-y-1 sm:space-y-2">
+														<div className="space-y-1 text-xs text-gray-500">
 															<p
 																title={`Aula: ${classItem.classroom}`}
-																className="text-xs sm:text-sm text-gray-500 line-clamp-1"
+																className="line-clamp-1"
 															>
-																<span className="font-medium">
-																	{classItem.classroom}
-																</span>
+																{classItem.classroom}
 															</p>
 															<p
 																title={`Profesor: ${classItem.teacher}`}
-																className="text-xs sm:text-sm text-gray-500 line-clamp-1"
+																className="line-clamp-1"
 															>
-																<span className="font-medium">
-																	{classItem.teacher}
-																</span>
+																{classItem.teacher}
 															</p>
 														</div>
-														{duration > 2 && (
-															<div className="mt-2 sm:mt-4 text-xs sm:text-sm text-gray-500">
-																<p
-																	title={`Desglose por hora: ${duration} horas`}
-																	className="font-semibold mb-1 sm:mb-2 line-clamp-1"
-																>
-																	Desglose por hora:
-																</p>
-																<div className="flex flex-wrap gap-1 sm:gap-2">
-																	{Array.from({ length: duration }, (_, i) => (
-																		<span
-																			title={`Hora: ${formatTimeDisplay(
-																				hours[startIdx + i],
-																				is24HourFormat,
-																			)} - ${formatTimeDisplay(
-																				hours[startIdx + i + 1] ||
-																					classItem.endTime,
-																				is24HourFormat,
-																			)}`}
-																			key={`${i}-${classItem.id}`}
-																			className="bg-gray-100 px-2 sm:px-3 py-0.5 sm:py-1 rounded-md sm:rounded-lg text-xs sm:text-sm font-medium whitespace-nowrap"
-																		>
-																			{formatTimeDisplay(
-																				hours[startIdx + i],
-																				is24HourFormat,
-																			)}{" "}
-																			-{" "}
-																			{formatTimeDisplay(
-																				hours[startIdx + i + 1] ||
-																					classItem.endTime,
-																				is24HourFormat,
-																			)}
-																		</span>
-																	))}
-																</div>
-															</div>
-														)}
 													</div>
 												</div>
 											);
 										})
 									) : (
-										<div className="p-4 sm:p-6 lg:p-8 text-center flex items-center justify-center bg-gray-50/50 rounded-lg">
+										<div className="p-4 text-center bg-gray-50 rounded">
 											<p
 												title="No hay clases programadas"
-												className="text-sm sm:text-base text-gray-500 italic line-clamp-1"
+												className="text-sm text-gray-500 line-clamp-1"
 											>
 												No hay clases programadas
 											</p>

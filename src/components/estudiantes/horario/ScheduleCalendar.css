@@ -1,0 +1,115 @@
+/* ScheduleCalendar Styles */
+
+/* Background patterns */
+.mobile-day-background {
+	background-image: linear-gradient(
+			45deg,
+			rgba(99, 102, 241, 0.1) 25%,
+			transparent 25%
+		), linear-gradient(-45deg, rgba(99, 102, 241, 0.1) 25%, transparent 25%),
+		linear-gradient(45deg, transparent 75%, rgba(99, 102, 241, 0.1) 75%),
+		linear-gradient(-45deg, transparent 75%, rgba(99, 102, 241, 0.1) 75%);
+	background-size: 20px 20px;
+	background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}
+
+/* Desktop calendar card hover effect */
+.calendar-card-hover {
+	position: relative;
+	transition: all 0.3s ease;
+}
+
+.calendar-card-hover::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	opacity: 0;
+	transition: opacity 0.3s ease;
+	background-image: linear-gradient(
+			to right,
+			rgba(255, 255, 255, 0.3) 1px,
+			transparent 1px
+		), linear-gradient(to bottom, rgba(255, 255, 255, 0.3) 1px, transparent 1px),
+		radial-gradient(circle, rgba(255, 255, 255, 0.6) 1px, transparent 1px);
+	background-size: 15px 15px, 15px 15px, 15px 15px;
+	background-position: 0 0, 0 0, 0 0;
+	pointer-events: none;
+	z-index: 1;
+	border-radius: 0.5rem;
+}
+
+.calendar-card-hover:hover::before {
+	opacity: 1;
+}
+
+.calendar-card-hover:hover {
+	transform: scale(1.03);
+	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Empty cell simple hover */
+.calendar-cell-simple {
+	transition: all 0.2s ease;
+}
+
+.calendar-cell-simple:hover {
+	background-color: rgba(249, 250, 251, 0.8);
+}
+
+/* Calendar cell content positioning */
+.calendar-cell-content {
+	position: relative;
+	z-index: 2;
+}
+
+/* Mobile card hover effect */
+.mobile-card-hover {
+	transition: all 0.2s ease;
+}
+
+.mobile-card-hover:hover {
+	border-color: rgb(209, 213, 219);
+	transform: translateY(-1px);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Color indicator styles */
+.color-indicator {
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 0 2px rgba(255, 255, 255, 0.5);
+}
+
+/* Empty cell styles */
+.empty-cell {
+	background-color: rgba(249, 250, 251, 0.3);
+	border-radius: 0.25rem;
+	height: 3.5rem;
+}
+
+/* Class type badges */
+.badge-laboratorio {
+	background-color: rgb(219, 234, 254);
+	color: rgb(30, 64, 175);
+}
+
+.badge-taller {
+	background-color: rgb(224, 231, 255);
+	color: rgb(67, 56, 202);
+}
+
+.badge-proyecto {
+	background-color: rgb(254, 226, 226);
+	color: rgb(153, 27, 27);
+}
+
+.badge-default {
+	background-color: rgb(220, 252, 231);
+	color: rgb(22, 101, 52);
+}
+
+/* Line clamp utility */
+.line-clamp-1 {
+	overflow: hidden;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+}
