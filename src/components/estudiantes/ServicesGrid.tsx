@@ -1,10 +1,10 @@
-import { ServiceCard } from "./ServiceCard"
-import IconCalendarWeek from "@/assets/icons/IconCalendarWeek"
-import IconFileInfo from "@/assets/icons/IconFileInfo"
-import IconBook from "@/assets/icons/IconBook"
-import IconClock from "@/assets/icons/IconClock"
-import IconChar from "@/assets/icons/IconChar"
 import IconAward from "@/assets/icons/IconAward"
+import IconBook from "@/assets/icons/IconBook"
+import IconCalendarWeek from "@/assets/icons/IconCalendarWeek"
+import IconChar from "@/assets/icons/IconChar"
+import IconClock from "@/assets/icons/IconClock"
+import IconFileInfo from "@/assets/icons/IconFileInfo"
+import { ServiceCard } from "./ServiceCard"
 
 const SERVICES = [
   {
@@ -13,9 +13,8 @@ const SERVICES = [
     iconSvg: <IconCalendarWeek />,
     iconColor: "text-emerald-600",
     buttonText: "Ver Horario Completo",
-    buttonColor:
-      "bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white",
-    imageAlt: "Horario de clases",
+    image: "/images/horario.png",
+    link: "/estudiantes/horario",
     details: [
       { iconSvg: <IconClock />, text: "Próxima clase: Matemáticas - 10:00 AM" },
       { iconSvg: <IconCalendarWeek />, text: "6 materias este semestre" },
@@ -27,8 +26,8 @@ const SERVICES = [
     iconSvg: <IconFileInfo />,
     iconColor: "text-blue-600",
     buttonText: "Ver Calificaciones",
-    buttonColor: "bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white",
-    imageAlt: "Calificaciones",
+    image: "/images/calificaciones.png",
+    link: "/estudiantes/calificaciones",
     details: [],
     badges: [
       { label: "Promedio actual:", value: "8.7", colorClass: "bg-blue-100 text-blue-800" },
@@ -37,12 +36,13 @@ const SERVICES = [
   },
   {
     title: "Historial Académico",
-    description: "Accede a tu historial completo y documentos oficiales",
+    description: "Accede a tu historial académico",
     iconSvg: <IconBook />,
     iconColor: "text-purple-600",
     buttonText: "Ver Historial Completo",
-    buttonColor: "bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white",
-    imageAlt: "Historial académico",
+    image: "/images/historial.png",
+    link: "/estudiantes/historial",
+    inProgress: true,
     details: [
       { iconSvg: <IconChar />, text: "Semestre actual: 8vo" },
       { iconSvg: <IconAward />, text: "Créditos: 180/240" },
@@ -53,8 +53,8 @@ const SERVICES = [
 export function ServicesGrid() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
-      {SERVICES.map((service, index) => (
-        <ServiceCard key={index} {...service} />
+      {SERVICES.map((service) => (
+        <ServiceCard key={service.title} {...service} />
       ))}
     </div>
   )
