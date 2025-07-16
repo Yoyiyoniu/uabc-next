@@ -14,12 +14,10 @@ export const Route = createFileRoute("/estudiantes_/horario")({
 });
 
 function estudiantesPanel() {
-	const calendarRef = useRef<HTMLDivElement>(null);
-
 	return (
 		<EstudiantesLayout className="min-h-screen">
 			<div className="w-full max-w-none px-4 lg:px-8 py-6">
-				<div className="mb-6">
+				<div className="mb-6 text-center">
 					<h2 className="text-3xl font-bold text-primary mb-2">
 						Horario de Clases
 					</h2>
@@ -27,7 +25,7 @@ function estudiantesPanel() {
 						Consulta tu horario semanal y próximas clases
 					</p>
 				</div>
-				<div className="w-full">
+				<div className="w-3/4 mx-auto">
 					<ScheduleCalendar
 						days={dias}
 						hours={horas}
@@ -43,7 +41,6 @@ function estudiantesPanel() {
 							type: clase.tipo,
 							color: clase.color,
 						}))}
-						ref={calendarRef}
 					/>
 				</div>
 			</div>

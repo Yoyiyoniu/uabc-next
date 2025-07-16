@@ -1,4 +1,4 @@
-import { forwardRef, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 import "./ScheduleCalendar.css";
 
@@ -42,10 +42,11 @@ const getClassTypeBadge = (type: string) => {
 	return "badge-default";
 };
 
-export const ScheduleCalendar = forwardRef<
-	HTMLDivElement,
-	ScheduleCalendarProps
->(({ schedule, days, hours }, ref) => {
+export const ScheduleCalendar = ({
+	schedule,
+	days,
+	hours,
+}: ScheduleCalendarProps) => {
 	const [is24HourFormat, setIs24HourFormat] = useState(true);
 
 	const scheduleByDay = useMemo(() => {
@@ -70,10 +71,7 @@ export const ScheduleCalendar = forwardRef<
 	];
 
 	return (
-		<div
-			ref={ref}
-			className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden w-full"
-		>
+		<div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden w-full">
 			<div className="relative">
 				<div className="bg-white border-b border-gray-200 px-6 py-4">
 					<div className="flex items-center justify-between">
@@ -336,4 +334,4 @@ export const ScheduleCalendar = forwardRef<
 			</div>
 		</div>
 	);
-});
+};

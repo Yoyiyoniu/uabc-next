@@ -1,3 +1,5 @@
+import { Link } from "@tanstack/react-router";
+
 interface Feature {
 	title: string;
 	description: string;
@@ -14,9 +16,9 @@ export default function FeaturesGrid({ features }: FeaturesGridProps) {
 	return (
 		<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
 			{features.map((feature) => (
-				<a
+				<Link
 					key={feature.title}
-					href={feature.link}
+					to={feature.link}
 					target="_blank"
 					rel="noopener noreferrer"
 					className="bg-black/80 border border-green-500/50 rounded-lg p-6 backdrop-blur-sm hover:border-green-400/70 transition-all duration-200 transform hover:scale-105 hover:shadow-lg hover:shadow-green-500/20 group flex flex-col h-full"
@@ -49,7 +51,7 @@ export default function FeaturesGrid({ features }: FeaturesGridProps) {
 						</svg>
 						Ver en GitHub
 					</div>
-				</a>
+				</Link>
 			))}
 		</div>
 	);

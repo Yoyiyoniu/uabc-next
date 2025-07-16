@@ -9,11 +9,11 @@ import IconFileInfo from "@/assets/icons/IconFileInfo";
 import IconMenu2 from "@/assets/icons/IconMenu2";
 import IconUser from "@/assets/icons/IconUser";
 import IconX from "@/assets/icons/IconX";
+import { Link } from "@tanstack/react-router";
 
 export const Nav = () => {
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-	// Prevenir scroll cuando el menú esté abierto
 	useEffect(() => {
 		if (mobileMenuOpen) {
 			document.body.style.overflow = "hidden";
@@ -70,7 +70,7 @@ export const Nav = () => {
 			<header className="bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-200/50 relative z-50">
 				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 					<div className="flex items-center justify-between h-16">
-						<div className="flex items-center space-x-3">
+						<Link to="/estudiantes" className="flex items-center space-x-3">
 							<div className="w-10 h-10 relative">
 								<UabcLogo />
 							</div>
@@ -80,39 +80,39 @@ export const Nav = () => {
 									Sistema de Gestión Estudiantil
 								</p>
 							</div>
-						</div>
+						</Link>
 
 						<div className="flex items-center space-x-1">
 							<nav className="hidden md:flex items-center space-x-1">
-								<button
-									type="button"
+								<Link
+									to="/estudiantes/horario"
 									className="flex items-center space-x-2 justify-start px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-primary/10 hover:text-primary transition-colors"
 								>
 									<IconCalendarWeek className="text-primary" />
-									<span>Horarios</span>
-								</button>
-								<button
-									type="button"
+									<span>Horario</span>
+								</Link>
+								<Link
+									to="/estudiantes/calificaciones"
 									className="flex items-center space-x-2 justify-start px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-primary/10 hover:text-primary transition-colors"
 								>
 									<IconFileInfo className="text-primary" />
 									<span>Calificaciones</span>
-								</button>
-								<button
-									type="button"
+								</Link>
+								{/* <Link
+									to="/estudiantes/historial"
 									className="flex items-center space-x-2 justify-start px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-primary/10 hover:text-primary transition-colors"
 								>
 									<IconBook className="text-primary" />
 									<span>Historial</span>
-								</button>
-								<a
-									href="/estudiantes/login"
+								</Link> */}
+								<Link
+									to="/estudiantes/login"
 									type="button"
 									className="flex items-center space-x-2 justify-start px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-primary/10 hover:text-primary transition-colors"
 								>
 									<IconUser className="text-primary" />
 									<span>Mi perfil</span>
-								</a>
+								</Link>
 							</nav>
 
 							{/* Mobile menu button */}

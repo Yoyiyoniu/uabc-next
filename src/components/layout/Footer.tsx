@@ -1,4 +1,5 @@
 import UabcLogo from "@/assets/icons/main/UabcLogo";
+import { Link } from "@tanstack/react-router";
 import { UabcNextBadge } from "../UabcNextBadge/UabcNextBadge";
 
 export const Footer = () => {
@@ -29,66 +30,55 @@ export const Footer = () => {
 						<h4 className="font-semibold text-gray-900 mb-4">Servicios</h4>
 						<ul className="space-y-2 text-sm text-gray-600">
 							<li>
-								<a
-									href="#"
+								<Link
+									to="/estudiantes/horario"
 									className="hover:text-emerald-600 transition-colors"
 								>
 									Horarios
-								</a>
+								</Link>
 							</li>
 							<li>
-								<a
-									href="#"
+								<Link
+									to="/estudiantes/calificaciones"
 									className="hover:text-emerald-600 transition-colors"
 								>
 									Calificaciones
-								</a>
+								</Link>
 							</li>
-							<li>
-								<a
-									href="#"
-									className="hover:text-emerald-600 transition-colors"
-								>
-									Historial Académico
-								</a>
-							</li>
-							<li>
-								<a
-									href="#"
-									className="hover:text-emerald-600 transition-colors"
-								>
-									Constancias
-								</a>
+							<li className="mt-6">
+								<p className="text-gray-500">
+									Muy pronto agregaremos más servicios útiles para ti.
+								</p>
 							</li>
 						</ul>
 					</div>
 				</div>
 
 				<div className="border-t border-emerald-200 pt-8 mt-8">
-					<div className="flex flex-col md:flex-row justify-between items-center">
+					<div className="flex flex-col md:flex-row justify-center items-center">
 						<p className="text-sm text-gray-500">
-							© 2024 Universidad Autónoma de Baja California. Todos los derechos
-							reservados.
+							&copy;UABC Next - 2025 - Todos los derechos reservados
 						</p>
 						<div className="flex space-x-6 mt-4 md:mt-0">
-							<a
-								href="#"
+							<Link
+								to="/estudiantes"
+								search={{ modal: "privacidad" }}
 								className="text-sm text-gray-500 hover:text-emerald-600 transition-colors"
 							>
 								Privacidad
-							</a>
-							<a
-								href="#"
+							</Link>
+							<Link
+								to="/estudiantes"
 								className="text-sm text-gray-500 hover:text-emerald-600 transition-colors"
 							>
 								Términos
-							</a>
-							<a
-								href="#"
+							</Link>
+							<Link
+								to="/estudiantes"
 								className="text-sm text-gray-500 hover:text-emerald-600 transition-colors"
 							>
 								Ayuda
-							</a>
+							</Link>
 						</div>
 					</div>
 				</div>

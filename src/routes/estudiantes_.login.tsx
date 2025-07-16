@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
 import { AxiosError } from "axios";
 import { type FormEvent, useState } from "react";
 
@@ -173,12 +173,12 @@ function LoginPage() {
 				</div>
 
 				<nav className="mt-8 text-center">
-					<a
-						href="/estudiantes"
+					<Link
+						to="/estudiantes"
 						className="text-sm text-gray-500 hover:text-emerald-600 transition-colors"
 					>
 						← Volver al portal
-					</a>
+					</Link>
 				</nav>
 			</section>
 		</main>
