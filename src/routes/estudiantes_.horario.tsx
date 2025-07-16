@@ -25,7 +25,7 @@ function estudiantesPanel() {
 						Consulta tu horario semanal y próximas clases
 					</p>
 				</div>
-				<div className="w-3/4 mx-auto">
+				<div className="xl:w-3/4 mx-auto">
 					<ScheduleCalendar
 						days={dias}
 						hours={horas}

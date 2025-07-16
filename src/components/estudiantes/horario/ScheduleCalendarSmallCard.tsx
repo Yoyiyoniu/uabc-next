@@ -41,11 +41,11 @@ export const ScheduleCalendarCard = ({
         <button
           type="button"
           aria-label="Expandir información de la materia"
-          className="absolute top-2 right-2 z-20 rounded-full p-2 items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+          className="absolute top-2 right-2 z-20 rounded-full p-2 items-center justify-center"
           onClick={() => setOpen(true)}
           tabIndex={0}
         >
-          <IconExpand className="text-gray-700" />
+          <IconExpand className="text-primary" />
         </button>
         <div className={`w-6 h-6 ${color} rounded-lg flex-shrink-0 mt-0.5 color-indicator`} />
         <div className="flex-1 min-w-0">
