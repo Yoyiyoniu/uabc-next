@@ -51,7 +51,7 @@ const setupBrowserStealth = async (page: Page) => {
 	});
 };
 
-export const loginWithUabc = async (email: string, password: string) => {
+export const login = async (email: string, password: string) => {
 	const browser = await chromium.launch(BROWSER_CONFIG);
 
 	const context = await browser.newContext(CONTEXT_CONFIG);

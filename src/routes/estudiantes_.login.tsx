@@ -1,11 +1,13 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { AxiosError } from "axios";
+import { type FormEvent, useState } from "react";
+
 import IconAt from "@/assets/icons/IconAt";
 import IconEye from "@/assets/icons/IconEye";
 import IconEyeClose from "@/assets/icons/IconEyeClose";
 import IconLoading from "@/assets/icons/IconLoading";
 import UabcLogo from "@/assets/icons/main/UabcLogo";
-import { loginWithUabc } from "@/lib/login";
-import { createFileRoute } from "@tanstack/react-router";
-import { type FormEvent, useState } from "react";
+import { loginWithUabc } from "@/lib/loginWithUabc";
 
 export const Route = createFileRoute("/estudiantes_/login")({
 	component: LoginPage,
@@ -34,10 +36,16 @@ function LoginPage() {
 			if (result === true) {
 				window.location.href = "/estudiantes";
 			} else {
-				setError("Credenciales incorrectas. Por favor, intenta de nuevo.");
+				setError(result);
 			}
-		} catch (err) {
-			setError("Error de conexión. Verifica tu internet e intenta nuevamente.");
+		} catch (err: unknown) {
+			if (err instanceof AxiosError) {
+				setError(err.response?.data.message);
+			} else {
+				setError(
+					"Error de conexión. Verifica tu internet e intenta nuevamente.",
+				);
+			}
 		} finally {
 			setIsLoading(false);
 		}
