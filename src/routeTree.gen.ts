@@ -9,12 +9,18 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ShaRouteImport } from './routes/sha'
 import { Route as EstudiantesRouteImport } from './routes/estudiantes'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as EstudiantesLoginRouteImport } from './routes/estudiantes_.login'
 import { Route as EstudiantesHorarioRouteImport } from './routes/estudiantes_.horario'
 import { Route as EstudiantesCalificacionesRouteImport } from './routes/estudiantes_.calificaciones'
 
+const ShaRoute = ShaRouteImport.update({
+  id: '/sha',
+  path: '/sha',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EstudiantesRoute = EstudiantesRouteImport.update({
   id: '/estudiantes',
   path: '/estudiantes',
@@ -45,6 +51,7 @@ const EstudiantesCalificacionesRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/estudiantes': typeof EstudiantesRoute
+  '/sha': typeof ShaRoute
   '/estudiantes/calificaciones': typeof EstudiantesCalificacionesRoute
   '/estudiantes/horario': typeof EstudiantesHorarioRoute
   '/estudiantes/login': typeof EstudiantesLoginRoute
@@ -52,6 +59,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/estudiantes': typeof EstudiantesRoute
+  '/sha': typeof ShaRoute
   '/estudiantes/calificaciones': typeof EstudiantesCalificacionesRoute
   '/estudiantes/horario': typeof EstudiantesHorarioRoute
   '/estudiantes/login': typeof EstudiantesLoginRoute
@@ -60,6 +68,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/estudiantes': typeof EstudiantesRoute
+  '/sha': typeof ShaRoute
   '/estudiantes_/calificaciones': typeof EstudiantesCalificacionesRoute
   '/estudiantes_/horario': typeof EstudiantesHorarioRoute
   '/estudiantes_/login': typeof EstudiantesLoginRoute
@@ -69,6 +78,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/estudiantes'
+    | '/sha'
     | '/estudiantes/calificaciones'
     | '/estudiantes/horario'
     | '/estudiantes/login'
@@ -76,6 +86,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/estudiantes'
+    | '/sha'
     | '/estudiantes/calificaciones'
     | '/estudiantes/horario'
     | '/estudiantes/login'
@@ -83,6 +94,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/estudiantes'
+    | '/sha'
     | '/estudiantes_/calificaciones'
     | '/estudiantes_/horario'
     | '/estudiantes_/login'
@@ -91,6 +103,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   EstudiantesRoute: typeof EstudiantesRoute
+  ShaRoute: typeof ShaRoute
   EstudiantesCalificacionesRoute: typeof EstudiantesCalificacionesRoute
   EstudiantesHorarioRoute: typeof EstudiantesHorarioRoute
   EstudiantesLoginRoute: typeof EstudiantesLoginRoute
@@ -98,6 +111,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sha': {
+      id: '/sha'
+      path: '/sha'
+      fullPath: '/sha'
+      preLoaderRoute: typeof ShaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/estudiantes': {
       id: '/estudiantes'
       path: '/estudiantes'
@@ -139,6 +159,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   EstudiantesRoute: EstudiantesRoute,
+  ShaRoute: ShaRoute,
   EstudiantesCalificacionesRoute: EstudiantesCalificacionesRoute,
   EstudiantesHorarioRoute: EstudiantesHorarioRoute,
   EstudiantesLoginRoute: EstudiantesLoginRoute,

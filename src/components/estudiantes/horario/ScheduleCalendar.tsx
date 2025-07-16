@@ -1,4 +1,6 @@
 import { useMemo, useState } from "react";
+import { ScheduleCalendarCard } from "./ScheduleCalendarSmallCard";
+import { ScheduleCalendarHourCell } from "./ScheduleCalendarHourCard";
 
 import "./ScheduleCalendar.css";
 
@@ -130,7 +132,7 @@ export const ScheduleCalendar = ({
 											const startIdx = hours.indexOf(classStart.startTime);
 											const endIdx = hours.indexOf(classStart.endTime);
 											const duration = endIdx - startIdx;
-											const cellHeight = duration * 64; // 64px por fila (h-16)
+											const cellHeight = duration * 64;
 
 											return (
 												<td
@@ -142,63 +144,18 @@ export const ScheduleCalendar = ({
 														width: `calc((100% - 6rem) / ${days.length})`,
 													}}
 												>
-													<div
-														className={`${classStart.color} text-white p-3 rounded-lg text-sm h-full flex flex-col justify-center shadow-sm calendar-card-hover calendar-cell-content`}
-														style={{ height: `${cellHeight - 8}px` }}
-													>
-														<div
-															title={`Código: ${classStart.code}`}
-															className="font-bold text-sm mb-1 line-clamp-1"
-														>
-															{classStart.code}
-														</div>
-														<div
-															title={`Materia: ${classStart.subject}`}
-															className="font-medium text-xs mb-1 line-clamp-1"
-														>
-															{classStart.subject}
-														</div>
-														<div
-															title={`Aula: ${classStart.classroom}`}
-															className="text-xs opacity-90 mb-1 line-clamp-1"
-														>
-															{classStart.classroom}
-														</div>
-														<div
-															title={`Profesor: ${classStart.teacher}`}
-															className="text-xs opacity-75 mb-1 line-clamp-1"
-														>
-															{classStart.teacher}
-														</div>
-														<div
-															title={`Horario: ${formatTimeDisplay(
-																classStart.startTime,
-																is24HourFormat,
-															)} - ${formatTimeDisplay(
-																classStart.endTime,
-																is24HourFormat,
-															)}`}
-															className="text-xs font-medium line-clamp-1"
-														>
-															{formatTimeDisplay(
-																classStart.startTime,
-																is24HourFormat,
-															)}{" "}
-															-{" "}
-															{formatTimeDisplay(
-																classStart.endTime,
-																is24HourFormat,
-															)}
-														</div>
-														{duration > 2 && (
-															<div
-																title={`Desglose por hora: ${duration} horas`}
-																className="text-xs opacity-75 mt-1 line-clamp-1"
-															>
-																({duration} horas)
-															</div>
-														)}
-													</div>
+													<ScheduleCalendarHourCell
+														code={classStart.code}
+														subject={classStart.subject}
+														classroom={classStart.classroom}
+														teacher={classStart.teacher}
+														startTime={classStart.startTime}
+														endTime={classStart.endTime}
+														color={classStart.color}
+														duration={duration}
+														is24HourFormat={is24HourFormat}
+														formatTimeDisplay={formatTimeDisplay}
+													/>
 												</td>
 											);
 										}
@@ -232,7 +189,6 @@ export const ScheduleCalendar = ({
 								key={day}
 								className="border border-gray-200 rounded-lg overflow-hidden bg-[#fafafa] relative"
 							>
-								{/* Background Pattern */}
 								<div className="absolute inset-0 z-0 pointer-events-none opacity-20 mobile-day-background" />
 								<div className="px-4 py-3 bg-gray-50 border-b border-gray-200 relative z-10">
 									<h4
@@ -249,71 +205,21 @@ export const ScheduleCalendar = ({
 											const endIdx = hours.indexOf(classItem.endTime);
 											const duration = endIdx - startIdx;
 											return (
-												<div
+												<ScheduleCalendarCard
 													key={classItem.id}
-													className="flex items-start space-x-3 p-3 rounded-lg border border-gray-200 mobile-card-hover"
-												>
-													<div
-														className={`w-6 h-6 ${classItem.color} rounded-lg flex-shrink-0 mt-0.5 color-indicator`}
-													/>
-													<div className="flex-1 min-w-0">
-														<div className="mb-2">
-															<h3
-																title={`Materia: ${classItem.subject}`}
-																className="text-sm font-semibold text-gray-900 mb-1 line-clamp-1"
-															>
-																{classItem.subject}
-															</h3>
-															<span
-																title={`Tipo: ${classItem.type}`}
-																className={`inline-flex px-2 py-1 text-xs font-medium rounded line-clamp-1 ${getClassTypeBadge(classItem.type)}`}
-															>
-																{classItem.type}
-															</span>
-														</div>
-														<p
-															title={`Código: ${classItem.code}`}
-															className="text-sm text-gray-700 mb-2 font-medium line-clamp-1"
-														>
-															{classItem.code}
-														</p>
-														<p
-															title={`Horario: ${formatTimeDisplay(
-																classItem.startTime,
-																is24HourFormat,
-															)} - ${formatTimeDisplay(
-																classItem.endTime,
-																is24HourFormat,
-															)}`}
-															className="text-sm text-gray-600 mb-2 line-clamp-1"
-														>
-															{formatTimeDisplay(
-																classItem.startTime,
-																is24HourFormat,
-															)}{" "}
-															-{" "}
-															{formatTimeDisplay(
-																classItem.endTime,
-																is24HourFormat,
-															)}{" "}
-															({duration}h)
-														</p>
-														<div className="space-y-1 text-xs text-gray-500">
-															<p
-																title={`Aula: ${classItem.classroom}`}
-																className="line-clamp-1"
-															>
-																{classItem.classroom}
-															</p>
-															<p
-																title={`Profesor: ${classItem.teacher}`}
-																className="line-clamp-1"
-															>
-																{classItem.teacher}
-															</p>
-														</div>
-													</div>
-												</div>
+													id={classItem.id}
+													subject={classItem.subject}
+													code={classItem.code}
+													teacher={classItem.teacher}
+													classroom={classItem.classroom}
+													type={classItem.type}
+													color={classItem.color}
+													startTime={classItem.startTime}
+													endTime={classItem.endTime}
+													duration={duration}
+													formatTimeDisplay={(time) => formatTimeDisplay(time, is24HourFormat)}
+													getClassTypeBadge={getClassTypeBadge}
+												/>
 											);
 										})
 									) : (
