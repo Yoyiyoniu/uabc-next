@@ -1,11 +1,12 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import UabcLogo from "@/assets/icons/main/UabcLogo";
 
 import IconBook from "@/assets/icons/IconBook";
 import IconCalendarWeek from "@/assets/icons/IconCalendarWeek";
 import IconFileInfo from "@/assets/icons/IconFileInfo";
+import IconLogin2 from "@/assets/icons/IconLogin2";
 import IconMenu2 from "@/assets/icons/IconMenu2";
 import IconUser from "@/assets/icons/IconUser";
 import IconX from "@/assets/icons/IconX";
@@ -13,6 +14,8 @@ import { Link } from "@tanstack/react-router";
 
 export const Nav = () => {
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
 
 	useEffect(() => {
 		if (mobileMenuOpen) {
@@ -83,36 +86,56 @@ export const Nav = () => {
 						</Link>
 
 						<div className="flex items-center space-x-1">
-							<nav className="hidden md:flex items-center space-x-1">
+							{/* Menú de escritorio con fondo animado */}
+							<nav
+								className="hidden md:flex items-center space-x-1 relative"
+								style={{ minHeight: 40 }}
+							>
+								{/* Fondo animado */}
+								<motion.div
+									layout
+									initial={false}
+									animate={{
+										left: 0,
+										top: 0,
+										width: 100,
+										height: 100,
+										opacity: 1,
+									}}
+									exit={{ opacity: 0 }}
+									transition={{ type: "spring", stiffness: 500, damping: 30 }}
+								/>
 								<Link
 									to="/estudiantes/horario"
-									className="flex items-center space-x-2 justify-start px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-primary/10 hover:text-primary transition-colors"
+									className="relative z-10 flex items-center space-x-2 justify-start px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:text-primary transition-colors hover:bg-primary/10"
 								>
 									<IconCalendarWeek className="text-primary" />
 									<span>Horario</span>
 								</Link>
 								<Link
 									to="/estudiantes/calificaciones"
-									className="flex items-center space-x-2 justify-start px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-primary/10 hover:text-primary transition-colors"
+									className="relative z-10 flex items-center space-x-2 justify-start px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:text-primary transition-colors hover:bg-primary/10"
 								>
 									<IconFileInfo className="text-primary" />
 									<span>Calificaciones</span>
 								</Link>
-								{/* <Link
-									to="/estudiantes/historial"
-									className="flex items-center space-x-2 justify-start px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-primary/10 hover:text-primary transition-colors"
-								>
-									<IconBook className="text-primary" />
-									<span>Historial</span>
-								</Link> */}
-								<Link
-									to="/estudiantes/login"
-									type="button"
-									className="flex items-center space-x-2 justify-start px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-primary/10 hover:text-primary transition-colors"
-								>
-									<IconUser className="text-primary" />
-									<span>Mi perfil</span>
-								</Link>
+								{isLoggedIn ? (
+									<Link
+										to="/estudiantes/login"
+										className="relative z-10 flex items-center space-x-2 justify-start px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:text-primary transition-colors hover:bg-primary/10"
+									>
+										<IconUser className="text-primary" />
+										<span>Mi perfil</span>
+									</Link>
+								) : (
+									<Link
+										to="/estudiantes/login"
+										className="relative z-10 flex items-center space-x-2 justify-start px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:text-primary transition-colors hover:bg-primary/10"
+									>
+										<IconLogin2 className="text-primary" />
+										<span>Iniciar sesión</span>
+									</Link>
+								)}
 							</nav>
 
 							{/* Mobile menu button */}
